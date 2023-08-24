@@ -12,7 +12,7 @@ model Itinerary {
     }
 
     @permission(
-        actions: [get, list, update, delete],
+        actions: [get, list, update, delete, create],
         expression: true 
     )
 }
