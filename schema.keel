@@ -19,6 +19,7 @@ model Itinerary {
 
 job UpdateCheapestFlightsAnywhere {
     @schedule("0 8 * * *")
+    @permission(expression: true)
 }
 
 
