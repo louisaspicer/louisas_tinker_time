@@ -34,8 +34,6 @@ export default AutoSuggestDestinations(async (ctx, inputs) => {
     results = await res.text();
   }
 
-  console.log("placesss", results.places[0]);
-
   if (!results) {
     return null;
   }

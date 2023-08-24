@@ -89,5 +89,6 @@ api Api {
         CheapestFlightsAnywhere
         Itinerary
         Activity
+        Destination
     }
 }
