@@ -1,65 +1,64 @@
-model Todo {
+model Itinerary {
     fields {
-        complete Boolean @default(false)
-        title Text
-        description Text?
-        completedAt Timestamp?
-        owner Identity
-        project Project?
+        numberOfDays Number
+        location Text
+        activityTypes ActivityType[]
+        notes Text?
     }
 
     operations {
-        get todo(id)
-        list allTodos(complete?, project.id?) {
-            @where(todo.owner == ctx.identity)
-        }
-        delete deleteTodo(id)
-        update updateTodo(id) with (title?, description?, project.id?)
-        create createTodo() with (title, description?, project.id?) {
-            @permission(expression: ctx.isAuthenticated)
-            @set(todo.owner.id = ctx.identity.id)
-        }
-    }
-
-    functions {
-        update setCompletion(id) with (complete)
+        create createItinerary() with (numberOfDays, location, activityTypes)
+        update updateItineraryNotes(id) with (notes)
     }
 
     @permission(
         actions: [get, list, update, delete],
-        expression: todo.owner == ctx.identity
+        expression: true 
     )
 }
 
-model Project {
+job UpdateCheapestFlightsAnywhere {
+    @schedule("0 0 8 * * ? *")
+}
+
+
+model CheapestFlightsAnywhere {
     fields {
-        title Text
-        owner Identity
-        tasks Todo[]
+        origin Text
+        destination Text
+        cost Number
     }
 
     operations {
-        get getProject(id)
-        list listProjects() {
-            @where(project.owner == ctx.identity)
-        }
-        delete deleteProject(id)
-        create createProject() with (title) {
-            @permission(expression: ctx.isAuthenticated)
-            @set(project.owner.id = ctx.identity.id)
-        }
-        update updateProject(id) with (title)
+        list allFlights()
     }
 
     @permission(
         actions: [get, list, update, delete],
-        expression: project.owner == ctx.identity
+        expression: true 
     )
 }
 
-api Web {
+enum ActivityType {
+    See
+    Do
+    Eat
+    Stay
+}
+
+model Activity {
+    fields {
+        title Text
+        type ActivityType
+        details Text?
+        placeId Text? 
+    }
+}
+
+api Api {
     models {
-        Todo
-        Project
+        CheapestFlightsAnywhere
+        Itinerary
+        Activity
     }
 }
