@@ -22,6 +22,34 @@ job UpdateCheapestFlightsAnywhere {
     @permission(expression: true)
 }
 
+model Destination {
+    fields {
+        entityId Text
+        name Text
+    }
+
+    functions {
+        read autoSuggestDestinations(destination: Text) returns (AutoSuggestResponse) {
+            @permission(expression: true)
+        }
+    }
+}
+
+message AutoSuggestResponse {
+  places Places[]
+}
+
+message Places {
+    entityId Text
+    iataCode Text
+    name Text
+    countryId Text
+    countryName Text
+    cityName Text
+    location Text
+    hierarchy Text
+    type Text
+}
 
 model CheapestFlightsAnywhere {
     fields {
