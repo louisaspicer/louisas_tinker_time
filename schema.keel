@@ -26,7 +26,7 @@ enum ActivityType {
 }
 
 job UpdateCheapestFlightsAnywhere {
-    @schedule("0 8 * * *")
+    @schedule("15 12 * * ? *")
     @permission(expression: true)
 }
 
