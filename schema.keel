@@ -1,12 +1,13 @@
 model Itinerary {
     fields {
+        // Choose your location, number of days for the trip, what activities you want to plan - 
         numberOfDays Number
         location Text
         activityTypes ActivityType[]
         notes Text?
     }
 
-    operations {
+    actions {
         create createItinerary() with (numberOfDays, location, activityTypes)
         update updateItineraryNotes(id) with (notes)
     }
@@ -15,6 +16,13 @@ model Itinerary {
         actions: [get, list, update, delete, create],
         expression: true 
     )
+}
+
+enum ActivityType {
+    See
+    Do
+    Eat
+    Stay
 }
 
 job UpdateCheapestFlightsAnywhere {
@@ -28,11 +36,16 @@ model Destination {
         name Text
     }
 
-    functions {
-        read autoSuggestDestinations(destination: Text) returns (AutoSuggestResponse) {
+    actions {
+        read autoSuggestDestinations(DestinationQuery) returns (AutoSuggestResponse) {
             @permission(expression: true)
+            @function
         }
     }
+}
+
+message DestinationQuery {
+   destination Text
 }
 
 message AutoSuggestResponse {
@@ -58,7 +71,7 @@ model CheapestFlightsAnywhere {
         cost Number
     }
 
-    operations {
+    actions {
         list allFlights()
     }
 
@@ -68,12 +81,7 @@ model CheapestFlightsAnywhere {
     )
 }
 
-enum ActivityType {
-    See
-    Do
-    Eat
-    Stay
-}
+
 
 model Activity {
     fields {

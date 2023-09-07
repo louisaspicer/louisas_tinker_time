@@ -1,6 +1,7 @@
 import { UpdateCheapestFlightsAnywhere, models } from "@teamkeel/sdk";
 import fetch from "node-fetch";
 
+// Show random destinations for now
 const randomDestinationEntityIds = [
   "29475383",
   "29475385",
