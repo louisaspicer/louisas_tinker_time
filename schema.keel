@@ -1,22 +1,40 @@
 model Itinerary {
     fields {
-        // Choose your location, number of days for the trip, what activities you want to plan - 
+        // Choose your location, number of days for the trip, what activities you want to plan 
         numberOfDays Number
-        location Text
+        // Save location info from skyscanner response so we can use it to query flights
+        location LocationInfo?
         activityTypes ActivityType[]
+        // see? 
+        // do?
+        // eat?
+        // stay?
         notes Text?
+        pdf Text?
     }
 
     actions {
-        create createItinerary() with (numberOfDays, location, activityTypes)
+        create createItinerary() with (numberOfDays, activityTypes)
+        // set location on itinerary to get flight info later
+        update setLocation(id) with (location.id?)
+        // remove location row and delete from locationInfo table
+        write unsetLocation(id) returns (UnsetLocationRes) {
+            // @set(itinerary.location = null)
+            @function
+        }
         update updateItineraryNotes(id) with (notes)
+        update savePdf(id) with (pdf)
     }
+
+    @on([update], sendPdf)
 
     @permission(
         actions: [get, list, update, delete, create],
         expression: true 
     )
 }
+
+message UnsetLocationRes {}
 
 enum ActivityType {
     See
@@ -25,10 +43,10 @@ enum ActivityType {
     Stay
 }
 
-job UpdateCheapestFlightsAnywhere {
-    @schedule("15 12 * * * *")
-    @permission(expression: true)
-}
+// job UpdateCheapestFlightsAnywhere {
+//     @schedule("15 12 * * ? *")
+//     @permission(expression: true)
+// }
 
 model Destination {
     fields {
@@ -49,10 +67,10 @@ message DestinationQuery {
 }
 
 message AutoSuggestResponse {
-  places Places[]
+  places Place[]
 }
 
-message Places {
+message Place {
     entityId Text
     iataCode Text
     name Text
@@ -62,6 +80,24 @@ message Places {
     location Text
     hierarchy Text
     type Text
+}
+
+model LocationInfo {
+    fields {
+        entityId Text
+        iataCode Text
+        name Text
+        countryId Text
+        countryName Text
+        cityName Text
+        location Text
+        hierarchy Text
+        type Text
+    }
+
+    actions {
+        create saveLocationInfo() with (entityId, iataCode, name, countryId, countryName, cityName, location, hierarchy, type)
+    }
 }
 
 model CheapestFlightsAnywhere {

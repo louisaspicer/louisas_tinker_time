@@ -1,8 +1,8 @@
 {
 		"name": "louisas_tinker_time",
 		"dependencies": {
-				"@teamkeel/functions-runtime": "^0.365.16",
-				"@teamkeel/testing-runtime": "^0.365.16",
+				"@teamkeel/functions-runtime": "^0.368.0",
+				"@teamkeel/testing-runtime": "^0.368.0",
 				"@types/node": "^18.11.18",
 				"kysely": "^0.23.4",
 				"node-fetch": "^3.3.0",
