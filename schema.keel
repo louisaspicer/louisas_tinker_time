@@ -14,9 +14,9 @@ model Itinerary {
     }
 
     actions {
-        create createItinerary() with (numberOfDays, activityTypes)
+        create createItinerary() with (numberOfDays, activityTypes, location.entityId, location.iataCode, location.name, location.countryId, location.countryName, location.cityName, location.location, location.hierarchy, location.type)
         // set location on itinerary to get flight info later
-        update setLocation(id) with (location.id?)
+        update setLocation(id) with (location.id)
         // remove location row and delete from locationInfo table
         write unsetLocation(id) returns (UnsetLocationRes) {
             // @set(itinerary.location = null)
