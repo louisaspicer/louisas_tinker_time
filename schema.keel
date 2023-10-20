@@ -23,7 +23,6 @@ model Itinerary {
             @function
         }
         update updateItineraryNotes(id) with (notes)
-        update savePdf(id) with (pdf)
     }
 
     @on([update], sendPdf)
