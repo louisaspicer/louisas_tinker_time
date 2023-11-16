@@ -19,7 +19,6 @@ model Itinerary {
         update setLocation(id) with (location.id)
         // remove location row and delete from locationInfo table
         write unsetLocation(id) returns (UnsetLocationRes) {
-            // @set(itinerary.location = null)
             @function
         }
         update updateItineraryNotes(id) with (notes)
