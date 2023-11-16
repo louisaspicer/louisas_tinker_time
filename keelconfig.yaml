@@ -5,4 +5,4 @@ auth:
     - type: oidc
       name: clerk
       issuerUrl: "https://resolved-bear-86.clerk.accounts.dev"
-      clientId: "1234"
+      clientId: "http://localhost:5173/"
