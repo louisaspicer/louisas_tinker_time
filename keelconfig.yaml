@@ -1,2 +1,8 @@
 secrets:
   - name: SKYSCANNER_PUBLIC_KEY
+auth:
+  providers:
+    - type: oidc
+      name: clerk
+      issuerUrl: "https://resolved-bear-86.clerk.accounts.dev"
+      clientId: "1234"
