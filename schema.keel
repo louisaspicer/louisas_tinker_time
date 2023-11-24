@@ -5,10 +5,6 @@ model Itinerary {
         // Save location info from skyscanner response so we can use it to query flights
         location LocationInfo?
         activityTypes ActivityType[]
-        // see? 
-        // do?
-        // eat?
-        // stay?
         notes Text?
         pdf Text?
         user Identity
